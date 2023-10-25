@@ -10,14 +10,38 @@ Raylib.SetTargetFPS(60);
 // random och listor
 // -----------------------------------------------------------------------------
 
-Random generator = new Random();
+// Random generator = new Random();
 
 // list<string> names = den kommer innehålla flera string variabler. Listor börjar på 0 (Mario = names[0])
-List<string> names = new List<string>() {"Mario", "Luigi", "Toad", "Bowser", "Peach"};
-// names.Add("Mario");
+// List<string> names = new List<string>() {"Mario", "Luigi", "Toad", "Bowser", "Peach"};
+// names.Add("Goomba");
+// // int i = generator.Next(5); 
+// // int i = generator.Next(names.Count);
 
-// int i = generator.Next(5); 
-int i = generator.Next(names.Count);
+// // loop specifikt för att gå igenom listor. name finns bara i foreach loopen. 
+// foreach(string name in names)
+// {
+//     Console.WriteLine(name);
+// }
+// foreach (Rectangle wall in walls)
+// {
+//     Raylib.DrawRectangleRec(wall);
+// } ??
+
+// fördel med for över while: snyggare, lättare att göra rätt, kan använda i igen
+// for(int i = 0; i < 6; i++)
+// {
+
+// }
+
+// int i = 0;
+// while (i < 6)
+// {
+//     Console.WriteLine(names[i]);
+//     i++;
+// }
+
+// Console.ReadLine();
 
 // ------------------------------------------------------------------------------
 // karaktärer, väggar mm.
@@ -27,8 +51,16 @@ Texture2D characterImage = Raylib.LoadTexture("bunny.png");
 Rectangle characterRect = new Rectangle(400, 300, 64, 64);
 Vector2 movement = new Vector2(0, 0);
 
+// new List<Rectangle>(); eller bara new();
+List<Rectangle> walls = new();
+
+walls.Add(new Rectangle(50, 70, 400, 20));
+walls.Add(new Rectangle(400, 500, 20, 50));
+walls.Add(new Rectangle(160, 500, 100, 20));
+
+
 Rectangle doorRect = new Rectangle(5, 100, 50, 50);
-Rectangle wallRect = new Rectangle(50, 70, 400, 20);
+
 
 float speed = 5;
 int scene = 0;
@@ -89,7 +121,7 @@ while (!Raylib.WindowShouldClose())
             characterRect.x += 300;
             characterRect.y += 100;
         }
-        if (Raylib.CheckCollisionRecs(characterRect, wallRect))
+        if (Raylib.CheckCollisionRecs(characterRect, ))
         {
             // HP--;
             // Thread.Sleep(1000);
@@ -127,9 +159,13 @@ while (!Raylib.WindowShouldClose())
         // Raylib.DrawRectangleRec(characterRect, Color.WHITE);
         Raylib.DrawTexture(characterImage, (int)characterRect.x, (int)characterRect.y, Color.WHITE);
         Raylib.DrawRectangleRec(doorRect, Color.WHITE);
-        Raylib.DrawRectangleRec(wallRect, Color.BROWN);
         DrawPoints(points);
         // Raylib.DrawText($"HP: {HP}", 600, 10, 40, Color.WHITE);
+
+        foreach(Rectangle wall in walls)
+        {
+            Raylib.DrawRectangleRec(wall, Color.BROWN);
+        }
 
     }
     else if (scene == 2)
@@ -137,7 +173,7 @@ while (!Raylib.WindowShouldClose())
         Raylib.ClearBackground(Color.DARKGREEN);
         Raylib.DrawTexture(characterImage, (int)characterRect.x, (int)characterRect.y, Color.WHITE);
         Raylib.DrawRectangleRec(doorRect, Color.GOLD);
-        Raylib.DrawRectangleRec(wallRect, Color.BROWN);
+        // Raylib.DrawRectangleRec(wallRect, Color.BROWN);
         DrawPoints(points);
         // Raylib.DrawText($"HP: {HP}", 600, 10, 40, Color.WHITE);
     }
